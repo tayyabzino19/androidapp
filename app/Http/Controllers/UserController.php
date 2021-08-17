@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function profile()
@@ -33,7 +34,7 @@ class UserController extends Controller
             $extension = $request->file('photo')->getClientOriginalExtension();
             // Filename To store
             $fileNameToStore = $filename . time() . '.' . $extension;
-            $path = $request->file('photo')->storeAs("public/", $fileNameToStore);
+            $path = $request->file('photo')->storeAs("public/user", $fileNameToStore);
         }
         // Else add a dummy image
         else {

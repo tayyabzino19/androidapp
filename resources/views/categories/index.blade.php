@@ -1,6 +1,9 @@
 @extends('layouts.master')
 @section('title', 'Categories')
 @section('content')
+@section("page_head")
+        <link href="{{asset('design/assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+@show
 
 
 <div class="container">
@@ -63,13 +66,15 @@
 
 
                 <div class="card-body">
-                    <table class="table table-bordered table-hover table-checkable datatable"
-                        style="margin-top: 13px !important">
+                    <table class="table table-bordered table-hover table-checkable  "
+                        style="margin-top: 13px !important" id="mytable">
                         <thead>
                             <tr>
-                                <th>S#</th>
+                                <th>Sorting </th>
                                 <th>Name</th>
+
                                 <th>Status</th>
+
                                 <th>Actions</th>
 
                             </tr>
@@ -79,8 +84,9 @@
                             @foreach ($categories as $category)
 
                                 <tr>
-                                    <td> {{ $loop->iteration }} </td>
+                                    <td> {{ $category->priority }} </td>
                                     <td> {{ $category->name }} </td>
+
                                     <td>
                                         @if ($category->status == 'active')
                                             <span
@@ -100,10 +106,7 @@
                                             </a>
                                         </span>
                                         &nbsp;&nbsp;
-                                        <span class="  label-inline   font-weight-bold"
-                                            onclick="deleteCat({{ $category->id }})">
-                                            <i class="text-danger flaticon2-trash delete"></i>
-                                        </span>
+
                                     </td>
                                 </tr>
 
@@ -168,7 +171,7 @@
                                 <div class="form-group">
                                     <label>Prioty Order</label>
                                     <input type="number" class="form-control form-control-solid" name="prioty"
-                                        placeholder="Enter Prioty Number">
+                                        placeholder="Enter Prioty Number" value="{{ $getLastSortid->priority+1 }}">
                                 </div>
 
 
@@ -253,7 +256,14 @@
 @endsection
 @section('page_js')
 
+<script>
+        $(document).ready( function () {
+                 $('#mytable').DataTable();
+        });
+</script>
 
+<script src="{{asset('design/assets/js/pages/crud/datatables/basic/basic.js')}}"></script>
+<script src="{{asset('design/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
 <script>
     function deleteCat(id) {
         Swal.fire({
@@ -293,6 +303,11 @@
         }
 
     });
+
+
+
+
+
 </script>
 
 

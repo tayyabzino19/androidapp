@@ -5,12 +5,6 @@
         data-menu-dropdown-timeout="500">
         <!--begin::Menu Nav-->
         <ul class="menu-nav">
-            <li class="menu-item" aria-haspopup="true">
-                <a href="{{ route('home') }}" class="menu-link">
-                    <i class="menu-icon flaticon-home"></i>
-                    <span class="menu-text">Dashboard</span>
-                </a>
-            </li>
 
 
             <li class="menu-item" aria-haspopup="true">
@@ -47,9 +41,7 @@
                 class="menu-link">
                     <i class="menu-icon flaticon-lock"></i>
                     <span class="menu-text">Log Out</span>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
+
                 </a>
             </li>
 

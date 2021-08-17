@@ -120,6 +120,21 @@
                             @enderror
 
                         </div>
+
+
+
+                        <div class="form-group">
+                            <label>Priority </label>
+                            <input type="number" class="form-control form-control-solid" name="priority"
+                                value="{{ $video->priority }}"
+                                placeholder="Enter Video Title" required="">
+
+                                @error('title')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                        </div>
+
+
                     </div>
                     <div class="card-footer">
 
@@ -153,8 +168,8 @@
                 <div class="modal-body">
                     <video id="my-video" class="video-js" controls preload="auto" width="450" height="264"
                         poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-                        <source src="{{ asset('storage/'.$video->source) }}" type="video/mp4" />
-                        <source src="{{ asset('storage/'.$video->source) }}" type="video/webm" />
+                        <source src="{{ asset('storage/videos/'.$video->source) }}" type="video/mp4" />
+                        <source src="{{ asset('storage/videos/'.$video->source) }}" type="video/webm" />
                         <p class="vjs-no-js">
                             To view this video please enable JavaScript, and consider upgrading to a
                             web browser that

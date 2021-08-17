@@ -98,7 +98,7 @@
                                         <img src="{{ asset('design/assets/media/banners/logo.png')}}" class="max-h-100px" alt="">
                                     </a>
                                     <br/>
-									<h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg mt-5">Welcome to Portfolious</h3>
+									<h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg mt-5">Welcome to App</h3>
 
 								</div>
 								<!--begin::Title-->

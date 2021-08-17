@@ -95,6 +95,18 @@
                         </div>
 
 
+                        <div class="form-group">
+                            <label>Priority </label>
+                            <input type="number" class="form-control form-control-solid" name="priority"
+                                value="{{ $priority+1 }}"
+                                placeholder="Enter Video Title" required="">
+
+                                @error('priority')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                        </div>
+
+
 
 
 

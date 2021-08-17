@@ -46,7 +46,7 @@
                                     @if($user->photo == '')
                                         style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png)"
                                     @else
-                                         style="background-image: url(' {{asset('storage/'.$user->photo)}} ')"
+                                         style="background-image: url(' {{asset('storage/user/'.$user->photo)}} ')"
                                     @endif
                                     >
                                     <div class="image-input-wrapper" style="background-image: none;"></div>
@@ -115,7 +115,7 @@
 
                                                 <div class="form-group">
                                                     <label>Password</label>
-                                                    <input type="text" class="form-control" name="password" placeholder="Enter New Password" ">
+                                                    <input type="password" class="form-control" name="password" placeholder="Enter New Password" ">
 
                                                 </div>
 

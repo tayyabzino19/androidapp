@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/test', function () {
+    return view('home');
+});
+
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
@@ -39,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('Videos/Save', [App\Http\Controllers\VideoController::class, 'save'])->name('videos.save');
     Route::post('/Videos/Delete', [App\Http\Controllers\VideoController::class, 'delete'])->name('video.delete');
     Route::post('Videos/Update', [App\Http\Controllers\VideoController::class, 'update'])->name('videos.update');
+
 
 });
 

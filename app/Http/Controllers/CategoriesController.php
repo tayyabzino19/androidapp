@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
-
+use App\Models\User;
 class CategoriesController extends Controller
 {
     public function index()
     {
         $categories = Category::orderby('priority', 'asc')->get();
-        return view('categories.index', compact('categories'));
+
+        $getLastSortid = Category::select('priority')->orderby('priority','desc')->first();
+
+
+        return view('categories.index', compact('categories','getLastSortid'));
     }
 
     public function store(Request $request)
@@ -107,4 +111,24 @@ class CategoriesController extends Controller
             return redirect()->back()->with('error', 'Error While Updating Category');
         }
     }
+
+
+    public function categories($key)
+    {
+
+         $user = User::where('key',$key)->first();
+         if($user == null){
+             return 'Invalid Access';
+         }else{
+            $categories = Category::where('status','active')->get();
+
+
+            return response()->json([$categories]);
+
+
+         }
+    }
+
+
+
 }

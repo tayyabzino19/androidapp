@@ -2,7 +2,9 @@
 @section('title', 'Videos')
 @section('page_head')
 
-<link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet" />
+    <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet" />
+    <link href="{{asset('design/assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+
 @endsection
 
 @section('content')
@@ -54,15 +56,14 @@
 
 
                 <div class="card-body">
-                    <table class="table table-bordered table-hover table-checkable datatable"
+                    <table class="table table-bordered table-hover table-checkable  "
                         style="margin-top: 13px !important">
                         <thead>
                             <tr>
-                                <th>S#</th>
+                                <th>Sorting</th>
                                 <th>Title</th>
                                 <th>Category</th>
-
-                                <th>Thumbnail</th>
+                                 <th>Thumbnail</th>
                                 <th>Status</th>
                                 <th colspan="2" class="text-center">Action</th>
 
@@ -73,7 +74,7 @@
                             @foreach ($videos as $video)
                                 <tr>
                                     <td>
-                                        {{ $loop->iteration }}
+                                        {{ $video->priority }}
                                     </td>
 
                                     <td>
@@ -89,7 +90,7 @@
 
                                     <td>
                                         <img src="{{ asset($video->thumbnail) }}"
-                                            width="80" height="90" data-toggle="modal"
+                                            width="70" height="70" data-toggle="modal"
                                             class="img-thumbnail playvideo"
                                             data-target="#videoModal" data-source1="{{ $video->source }}"
                                             data-headtitle="{{ $video->title }}"
@@ -185,7 +186,6 @@
 
 
 
-
 <script>
 
     function deleteCat(id) {
@@ -234,7 +234,7 @@
         var headtitle =  $(this).data('headtitle');
         var poster =  $(this).data('poster');
 
-        var newsrc = `{{ asset('storage/`+source+`') }}`;
+        var newsrc = `{{ asset('storage/videos/`+source+`') }}`;
         var postersrc = `{{ asset('`+poster+`') }}`;
         $("#videotag").html('<source src="'+newsrc+'" type="video/mp4"></source>' );
        //alert(source.setAttribute('src',newsrc));
