@@ -94,7 +94,7 @@
                                             class="img-thumbnail playvideo"
                                             data-target="#videoModal" data-source1="{{ $video->source }}"
                                             data-headtitle="{{ $video->title }}"
-                                            data-poster="{{ $video->thumbnail300 }}"  />
+                                            data-poster="{{ $video->thumbnail }}"  />
                                     </td>
 
 
@@ -143,9 +143,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title head_title" id="exampleModalLabel"  > </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
+
                 </div>
                 <div class="modal-body">
                 <video   controls preload="auto" width="450" height="264" id="videotag"

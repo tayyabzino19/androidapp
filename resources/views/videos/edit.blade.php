@@ -81,7 +81,7 @@
                                         <label> Video </label>
                                         <br/>
                                         <span class=" " data-toggle="modal" data-target="#videoModal">
-                                            <img src="{{ asset( $video->thumbnail300 ) }}"
+                                            <img src="{{ asset( $video->thumbnail) }}"
                                                 class="h-75 align-self-end img-thumbnail" style="width:150px" alt="">
                                         </span>
                                     </div>

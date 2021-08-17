@@ -16,7 +16,7 @@ class VideoController extends Controller
 
     public function index()
     {
-        $videos = Video::with('category')->orderBy('priority','asc')->get();
+        $videos = Video::with('category')->orderBy('priority', 'asc')->get();
         return view('videos.index', compact('videos'));
     }
 
@@ -28,17 +28,16 @@ class VideoController extends Controller
 
     public function create()
     {
-         $getLastSortid = Video::select('priority')->orderby('priority','desc')->first();
+        $getLastSortid = Video::select('priority')->orderby('priority', 'desc')->first();
         $categories = Category::where('status', 'active')->get();
 
-        if($getLastSortid){
+        if ($getLastSortid) {
 
             $priority = $getLastSortid->priority;
-
-        }else{
+        } else {
             $priority =  0;
         }
-        return view('videos.create', compact('categories','priority'));
+        return view('videos.create', compact('categories', 'priority'));
     }
 
 
@@ -65,24 +64,26 @@ class VideoController extends Controller
 
         $find =  Video::findOrFail($request->id);
 
-        $path = public_path().'/storage/videos/'.$find->source;
+        $path = public_path() . '/storage/data/' . $find->source;
 
-       // $path = "public/storage/videos/".$find->source;
-       $thumbnail = public_path().'/'.$find->thumbnail;
-       $thumbnail300 = public_path().'/'.$find->thumbnail300;
+        // $path = "public/storage/videos/".$find->source;
+        $thumbnail = public_path() . '/' . $find->thumbnail;
+        $thumbnail300 = public_path() . '/' . $find->thumbnail300;
 
-        if(File::exists($path)) {
+        if (File::exists($path)) {
             File::delete($path);
             File::delete($thumbnail);
             File::delete($thumbnail300);
-        }else{
+        } else {
             $find->delete();
             return redirect()->back()->with('error', "Deleted But File Not Exists");
         }
 
+
+
         if ($find->delete()) {
 
-             return redirect()->back()->with('success', ' Video Deleted');
+            return redirect()->back()->with('success', ' Video Deleted');
         } else {
             return redirect()->back()->with('error', 'Error While Deleting Video');
         }
@@ -116,16 +117,17 @@ class VideoController extends Controller
             $status = 'inactive';
         }
 
-        if ($request->hasFile('video')){
+        if ($request->hasFile('video')) {
             $prefix =  'vd-';
-            $lastVideo = Video::select('number')->orderBy('id','desc')->first();
 
-            if($lastVideo != null){
-                $newName =  $lastVideo->number+1;
-            }else{
+            $lastVideo = Video::orderBy('number','desc')->first();
+            if ($lastVideo != null) {
+                $newName =  $lastVideo->number + 1;
+            } else {
                 $newName =  0;
                 $prefix =  'vd-';
             }
+
 
 
             $filenameWithExt = $request->file('video')->getClientOriginalName();
@@ -135,7 +137,8 @@ class VideoController extends Controller
             $extension = $request->file('video')->getClientOriginalExtension();
             // Filename To store
             $new_name = str_replace(' ', '_', $request->title);
-            $fileNameToStore = $prefix.($newName).'.'.$extension;
+
+            $fileNameToStore = $prefix . ($newName) . '.' . $extension;
 
             $path = $request->file('video')->storeAs("public/data", $fileNameToStore);
             //$path = $request->file('video')->move(public_path('storage/data/'), $fileNameToStore);
@@ -143,61 +146,31 @@ class VideoController extends Controller
 
             $command = "/usr/bin/ffmpeg";
             $tmp = $_FILES['video']['tmp_name'];
-            $img = 'Thumbnail_'.$newName.'.jpg';
-            $size = '80x90';
+            $img = 'Thumbnail_' . $newName . '.jpg';
+            $size = '300x300';
             $second = 5;
             $cmd = "$command -i $tmp -an -ss $second -s $size $img";
             system($cmd);
-
-
-           // Storage::move(asset($img), 'public/data/'.$img);
-
-            //move_uploaded_file(asset($img),'public/data/');
-
-           //Storage::put("public/data/" . $img,$tmp);
-
-
-            //dd(11);
-            // if(File::exists(public_path($img))){
-            //     File::delete(public_path($img));
-            // }
-
-            $command2 = "/usr/bin/ffmpeg";
-            $tmp2 = $_FILES['video']['tmp_name'];
-            $img2 = 'Thumbnail2_' . $newName.'.jpg';
-            $size2 = '80x90';
-            $size2 = '300x300';
-            $second2 = 5;
-            $cmd2 = "$command2 -i $tmp2 -an -ss $second2 -s $size2 $img2";
-            system($cmd2);
-
-            Storage::put("public/data/" . $img2,$tmp2);
-           // Storage::put("public/data/" . $img2, asset($img2));
-            $thumbnail = $img2;
-            $thumbnail2 = $img2;
-        }else{
+            $thumbnail = $img;
+        } else {
             $fileNameToStore = 'Dummy.mp3';
             $thumbnail = 'no_img.png';
-            $thumbnail2 = 'no_img.png';
             $prefix = 0;
             $newName = 0;
         }
-
-
 
 
         $video = new Video;
         $video->title  = $request->title;
         $video->status = $status;
         $video->priority = $request->priority;
-
         $video->category_id =  $request->category;
         $video->source =  $fileNameToStore;
         $video->thumbnail = $thumbnail;
         $video->video_prefix = $prefix;
         $video->number = $newName;
         //-- Saving Thumbnail for 300 x 300
-        $video->thumbnail300 = $thumbnail2;
+        $video->thumbnail300 = 'test';
 
         if ($video->save()) {
 
@@ -226,7 +199,15 @@ class VideoController extends Controller
             $status = 'inactive';
         }
 
-        if ($request->hasFile('video')){
+        if ($request->hasFile('video')) {
+
+            $prefix =  'vd-';
+            //$lastVideo = Video::select('number')->orderBy('id', 'asc')->first();
+            $lastVideo = Video::orderBy('number','desc')->first();
+            $newName =  $lastVideo->number+1;
+
+
+
             $filenameWithExt = $request->file('video')->getClientOriginalName();
             // Get Filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -234,46 +215,44 @@ class VideoController extends Controller
             $extension = $request->file('video')->getClientOriginalExtension();
             // Filename To store
             $new_name = str_replace(' ', '_', $request->title);
-            $fileNameToStore = $new_name . time() . '.' . $extension;
 
-            $path = $request->file('video')->storeAs("public/videos/", $fileNameToStore);
+            $fileNameToStore = $prefix . ($newName) . '.' . $extension;
+            //$fileNameToStore = $new_name . time() . '.' . $extension;
+            //$fileNameToStore = $prefix . ($newName) . '.' . $extension;
+            //$delpath = asset('storage/data').'/'.$find->source;
+            // $path = public_path() . '/storage/data/' . $find->source;
+            // File::delete($path);
+
+            File::delete(public_path($find->thumbnail));
+
+            File::delete(public_path('storage/data/'.$find->source));
+
+
+
+
+            $path = $request->file('video')->storeAs("public/data", $fileNameToStore);
+
             // Delete Video Files
-            $path = public_path().'/storage/videos/'.$find->source;
-            $thumbnail = public_path().'/'.$find->thumbnail;
-            $thumbnail300 = public_path().'/'.$find->thumbnail300;
 
 
             // Delete Video Thumbnails
 
-            if(File::exists($path)){
 
-                File::delete($path);
-                File::delete($thumbnail);
-                File::delete($thumbnail300);
-            }
 
             $command = "/usr/bin/ffmpeg";
             $tmp = $_FILES['video']['tmp_name'];
-            $img = 'Thumbnail_' . $new_name . time() . '.jpg';
-            $size = '80x90';
+            $img = 'Thumbnail_' . $newName.'.jpg';
             $size = '300x300';
             $second = 5;
             $cmd = "$command -i $tmp -an -ss $second -s $size $img";
             system($cmd);
-            $command2 = "/usr/bin/ffmpeg";
-            $tmp2 = $_FILES['video']['tmp_name'];
-            $img2 = 'Thumbnail2_' . $new_name . time() . '.jpg';
-            $size2 = '80x90';
-            $size2 = '300x300';
-            $second2 = 5;
-            $cmd2 = "$command2 -i $tmp2 -an -ss $second2 -s $size2 $img2";
-            system($cmd2);
+
             $thumbnail = $img;
-            $thumbnail2 = $img2;
-        }else{
+
+        } else {
             $fileNameToStore = $find->source;
             $thumbnail = $find->thumbnail;
-            $thumbnail2 = $find->thumbnail300;
+
         }
 
 
@@ -283,9 +262,9 @@ class VideoController extends Controller
         $find->category_id =  $request->category;
         $find->source =  $fileNameToStore;
         $find->thumbnail = $thumbnail;
-        $find->thumbnail300 = $thumbnail2;
+        $find->thumbnail300 = 'test';
         $find->priority = $request->priority;
-
+        $find->number = $newName;
 
 
         if ($find->save()) {
@@ -297,9 +276,6 @@ class VideoController extends Controller
         } else {
             return redirect()->back()->with('error', 'Error While Updating Video');
         }
-
-
-
     }
 
 
@@ -307,18 +283,14 @@ class VideoController extends Controller
     public function apivideos($key)
     {
 
-         $user = User::where('key',$key)->first();
-         if($user == null){
-             return 'Invalid Access';
-         }else{
-            $videos = Video::with('category')->where('status','active')->get();
+        $user = User::where('key', $key)->first();
+        if ($user == null) {
+            return 'Invalid Access';
+        } else {
+            $videos = Video::with('category')->where('status', 'active')->get();
 
 
             return response()->json([$videos]);
-
-
-         }
+        }
     }
-
-
 }
