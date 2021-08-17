@@ -234,7 +234,7 @@
         var headtitle =  $(this).data('headtitle');
         var poster =  $(this).data('poster');
 
-        var newsrc = `{{ asset('storage/videos/`+source+`') }}`;
+        var newsrc = `{{ asset('storage/data/`+source+`') }}`;
         var postersrc = `{{ asset('`+poster+`') }}`;
         $("#videotag").html('<source src="'+newsrc+'" type="video/mp4"></source>' );
        //alert(source.setAttribute('src',newsrc));

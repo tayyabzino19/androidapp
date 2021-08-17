@@ -117,15 +117,16 @@ class VideoController extends Controller
         }
 
         if ($request->hasFile('video')){
-            $prefix =  'VD-';
+            $prefix =  'vd-';
             $lastVideo = Video::select('number')->orderBy('id','desc')->first();
 
             if($lastVideo != null){
                 $newName =  $lastVideo->number+1;
             }else{
                 $newName =  0;
-                $prefix =  'VD-';
+                $prefix =  'vd-';
             }
+
 
             $filenameWithExt = $request->file('video')->getClientOriginalName();
             // Get Filename
@@ -135,15 +136,32 @@ class VideoController extends Controller
             // Filename To store
             $new_name = str_replace(' ', '_', $request->title);
             $fileNameToStore = $prefix.($newName).'.'.$extension;
-            $path = $request->file('video')->storeAs("public/videos/", $fileNameToStore);
+
+            $path = $request->file('video')->storeAs("public/data", $fileNameToStore);
+            //$path = $request->file('video')->move(public_path('storage/data/'), $fileNameToStore);
+
+
             $command = "/usr/bin/ffmpeg";
             $tmp = $_FILES['video']['tmp_name'];
-            $img = 'Thumbnail_' . $newName.'.jpg';
+            $img = 'Thumbnail_'.$newName.'.jpg';
             $size = '80x90';
-            $size = '300x300';
             $second = 5;
             $cmd = "$command -i $tmp -an -ss $second -s $size $img";
             system($cmd);
+
+
+           // Storage::move(asset($img), 'public/data/'.$img);
+
+            //move_uploaded_file(asset($img),'public/data/');
+
+           //Storage::put("public/data/" . $img,$tmp);
+
+
+            //dd(11);
+            // if(File::exists(public_path($img))){
+            //     File::delete(public_path($img));
+            // }
+
             $command2 = "/usr/bin/ffmpeg";
             $tmp2 = $_FILES['video']['tmp_name'];
             $img2 = 'Thumbnail2_' . $newName.'.jpg';
@@ -152,7 +170,10 @@ class VideoController extends Controller
             $second2 = 5;
             $cmd2 = "$command2 -i $tmp2 -an -ss $second2 -s $size2 $img2";
             system($cmd2);
-            $thumbnail = $img;
+
+            Storage::put("public/data/" . $img2,$tmp2);
+           // Storage::put("public/data/" . $img2, asset($img2));
+            $thumbnail = $img2;
             $thumbnail2 = $img2;
         }else{
             $fileNameToStore = 'Dummy.mp3';
@@ -161,6 +182,8 @@ class VideoController extends Controller
             $prefix = 0;
             $newName = 0;
         }
+
+
 
 
         $video = new Video;

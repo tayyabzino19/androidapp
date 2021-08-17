@@ -2,7 +2,7 @@
 @section('title', 'Video Create')
 @section('page_head')
 
-<link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet" />
+
 
 @endsection
 @section('content')
@@ -166,10 +166,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <video id="my-video" class="video-js" controls preload="auto" width="450" height="264"
-                        poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-                        <source src="{{ asset('storage/videos/'.$video->source) }}" type="video/mp4" />
-                        <source src="{{ asset('storage/videos/'.$video->source) }}" type="video/webm" />
+                    <video id="mysvideo"   controls preload="auto" width="450" height="264" >
+                        <source src="{{ asset('storage/data/'.$video->source) }}" type="video/mp4" />
+                        <source src="{{ asset('storage/data/'.$video->source) }}" type="video/webm" />
                         <p class="vjs-no-js">
                             To view this video please enable JavaScript, and consider upgrading to a
                             web browser that
@@ -178,7 +177,7 @@
                     </video>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light-primary font-weight-bold"
+                    <button type="button" class="btn btn-light-primary font-weight-bold modelClose"
                         data-dismiss="modal">Close</button>
 
                 </div>
@@ -203,7 +202,6 @@
 @endsection
 @section('page_js')
 
-<script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
 <script>
     function deleteCat(id) {
         Swal.fire({
@@ -243,6 +241,15 @@
         }
 
     });
+
+    $(document).on("click", ".modelClose", function() {
+
+
+
+        $('#mysvideo').trigger('pause');
+    });
+
+
 </script>
 
 
