@@ -37,7 +37,7 @@
                     </li>
 
                     <li class="breadcrumb-item">
-                        <a href="#" class="text-muted">Videos</a>
+                        <a href="#" class="text-muted">All Videos</a>
                     </li>
 
                 </ul>
