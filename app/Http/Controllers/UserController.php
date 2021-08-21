@@ -45,7 +45,7 @@ class UserController extends Controller
 
         $user->password = $password;
 
-        $user->key = $request->key;
+
 
 
         $user->photo  = $fileNameToStore;

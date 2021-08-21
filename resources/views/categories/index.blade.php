@@ -72,7 +72,7 @@
                             <tr>
                                 <th>Sorting </th>
                                 <th>Name</th>
-
+                                <th>Items</th>
                                 <th>Status</th>
 
                                 <th>Actions</th>
@@ -86,6 +86,7 @@
                                 <tr>
                                     <td> {{ $category->priority }} </td>
                                     <td> {{ $category->name }} </td>
+                                    <td> {{ $category->videos->count() }} </td>
 
                                     <td>
                                         @if ($category->status == 'active')

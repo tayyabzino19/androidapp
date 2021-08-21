@@ -81,7 +81,7 @@
                                         <label> Video </label>
                                         <br/>
                                         <span class=" " data-toggle="modal" data-target="#videoModal">
-                                            <img src="{{ asset( $video->thumbnail) }}"
+                                            <img src="{{ asset( 'storage/data/'.$video->thumbnail) }}"
                                                 class="h-75 align-self-end img-thumbnail" style="width:150px" alt="">
                                         </span>
                                     </div>
@@ -140,7 +140,7 @@
 
 
                         <a href="{{ route('videos.index') }}" class="btn btn-secondary">Back</a>
-                        <button type="submit" class="btn btn-primary mr-2">Create</button>
+                        <button type="submit" class="btn btn-primary mr-2">Update</button>
                     </div>
 
                     <!--end::Form-->

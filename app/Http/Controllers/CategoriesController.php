@@ -120,7 +120,7 @@ class CategoriesController extends Controller
          if($user == null){
              return 'Invalid Access';
          }else{
-            $categories = Category::where('status','active')->get();
+            $categories = Category::Select('name','priority','created_at')->where('status','active')->get();
 
 
             return response()->json([$categories]);

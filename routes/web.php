@@ -39,11 +39,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('Videos', [App\Http\Controllers\VideoController::class, 'index'])->name('videos.index');
 
     Route::get('Videos/Create', [App\Http\Controllers\VideoController::class, 'create'])->name('videos.create');
-    Route::get('Videos/edit/{id}', [App\Http\Controllers\VideoController::class, 'edit'])->name('videos.edit');
+    Route::get('Videos/edit/{id?}', [App\Http\Controllers\VideoController::class, 'edit'])->name('videos.edit');
     Route::post('Videos/Save', [App\Http\Controllers\VideoController::class, 'save'])->name('videos.save');
     Route::post('/Videos/Delete', [App\Http\Controllers\VideoController::class, 'delete'])->name('video.delete');
     Route::post('Videos/Update', [App\Http\Controllers\VideoController::class, 'update'])->name('videos.update');
 
+
+    Route::get('All-Videos', [App\Http\Controllers\VideoController::class, 'allvideos'])->name('videos.allvideos');
 
 });
 
