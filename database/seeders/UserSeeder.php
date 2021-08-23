@@ -21,6 +21,9 @@ class UserSeeder extends Seeder
         $user->password = Hash::make('pakistan');
         $user->status = "active";
         $user->photo = "";
+        $user->key = "RJoJnyCXm8rP4BtM85hY";
+
+
         $user->save();
 
 
