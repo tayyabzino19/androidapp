@@ -46,7 +46,7 @@
 
     @section("page_head")
     @show
-    <title> @yield('title') | Android App</title>
+    <title> @yield('title') | Glitter Live Wallpaper </title>
 
 
 

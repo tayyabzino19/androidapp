@@ -7,7 +7,7 @@
 	<head>
 
 		<meta charset="utf-8" />
-		<title> Login | Portfolious </title>
+		<title> Login | Glitter Live Wallpaper </title>
 
 
 		<!--begin::Fonts-->
@@ -31,11 +31,11 @@
 
         <style>
             .form h3{
-                color:#AD1C09!important;
+                color:#BB2349!important;
             }
             .form button{
-                background-color:#AD1C09!important;
-                border-color: #AD1C09!important;
+                background-color:#BB2349!important;
+                border-color: #BB2349!important;
             }
         </style>
 	</head>
@@ -49,11 +49,15 @@
 				<!--begin::Aside-->
 				<div class="login-aside d-flex flex-column flex-row-auto"
 
-                style="background-image:url({{ asset('design/assets/media/banners/loginpage.jpg')}});background-size:cover;;    ">
+                style="background-image:url({{ asset('design/assets/media/banners/loginpage.png')}});
+                background-size:cover;background-position:center center;    ">
 					<!--begin::Aside Top-->
-                    <div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15">
+                    <div class="d-flex flex-column-auto flex-column pt-lg-40 pt-55">
 						<!--begin::Aside header-->
 
+                        <a href="#" class="text-center mt-50" style="margin-top:100px;">
+							<img src="{{ asset('design/assets/media/banners/g_logo.png')}}" class="max-h-200px" alt="">
+						</a>
 						<!--end::Aside header-->
 						<!--begin::Aside title-->
 						{{-- <h3 class="font-weight-bolder text-center font-size-h4 font-size-h1-lg" style="color: #ffffff;">
@@ -95,10 +99,10 @@
 								<div class="pb-13 pt-lg-0 pt-5">
                                     <a href="#" class="login-logo pb-xl-20 pb-15">
 
-                                        <img src="{{ asset('design/assets/media/banners/logo.png')}}" class="max-h-100px" alt="">
+                                        <img src="{{ asset('design/assets/media/banners/logo.png')}}" class="max-h-250px" alt="">
                                     </a>
                                     <br/>
-									<h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg mt-5">Welcome to App</h3>
+									<h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg mt-5">Welcome to Glitter app</h3>
 
 								</div>
 								<!--begin::Title-->

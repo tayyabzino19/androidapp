@@ -83,19 +83,21 @@
                                 </div>
                                 <br/><br/>
                             </div>
-                            {{-- <div class="col-md-4 my-2 ">
+                            <div class="col-md-4 my-2 ">
                                 <div class=" align-items-center">
                                     <label class="mr-3 mb-0 d-none d-md-block"> <strong> Status: </strong> <br> <br/></label>
-                                    <select class="form-control videostatus" data-column="5" id="kt_datatable_search_status">
-                                        <option value="">All</option>
-
-                                        <option value="Active"> Active </option>
+                                    <select class="form-control videostatus" data-column="4" id="kt_datatable_search_status">
+                                        <option value=""> All </option>
+                                        <option value="activated"> Activated </option>
                                         <option value="inactive"> In Active </option>
+
+
+
 
                                     </select>
                                 </div>
                                 <br/><br/>
-                            </div> --}}
+                            </div>
                         </div>
 
 
@@ -228,10 +230,10 @@
 
                         {
                             data: function(data){
-                                if(data.status == 'active'){
-                                    return "<span class='label label-lg label-light-success label-inline'> Active </span>'";
-                                }else{
-                                    return "<span class='label label-lg label-light-danger label-inline'> In Active </span>'";
+                                if(data.status == 'inactive'){
+                                    return "<span class='label label-lg label-light-danger label-inline text-capitalize'>"+ data.status+ "</span>'";
+                                }else if(data.status == 'activated') {
+                                    return "<span class='label label-lg label-light-success label-inline text-capitalize'> "+ data.status+ " </span>'";
                                 }
                             },
 
@@ -293,18 +295,22 @@
             $('#project_id').val(projectid);
         });
 
+
+
                 $('.categories').on('change', function() {
                     var table = $('.table').DataTable();
                     table.column($(this).data('column')).search($(this).val()).draw();
                     // datatable.search($(this).val().toLowerCase(), 'Type');
                 });
 
-                // $('.videostatus').on('change', function() {
-                //     var table = $('.table').DataTable();
-                //      table.column($(this).data('column')).search($(this).val()).draw();
-                //     //table.column('active').search($(this).val()).draw();
-                //     // datatable.search($(this).val().toLowerCase(), 'Type');
-                // });
+                $('#kt_datatable_search_status').on('change', function() {
+
+                    var table = $('.table').DataTable();
+
+                     table.column($(this).data('column')).search($(this).val()).draw();
+                    //table.column('active').search($(this).val()).draw();
+                    // datatable.search($(this).val().toLowerCase(), 'Type');
+                });
 
     </script>
 
@@ -372,7 +378,7 @@
         });
 
         $(document).on("click", ".modelClose", function() {
-            $('#videotag').trigger('stop');
+            $('#videotag').trigger('pause');
             location.reload();
         });
 

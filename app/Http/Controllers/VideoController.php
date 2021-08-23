@@ -116,7 +116,7 @@ class VideoController extends Controller
         ]);
 
         if ($request->status == 1) {
-            $status = 'active';
+            $status = 'activated';
         } else {
             $status = 'inactive';
         }
@@ -184,7 +184,7 @@ class VideoController extends Controller
 
 
         if ($request->status == 1) {
-            $status = 'active';
+            $status = 'activated';
         } else {
             $status = 'inactive';
         }
@@ -253,7 +253,7 @@ class VideoController extends Controller
             if ($user == null) {
                 return 'Invalid Access';
             } else {
-                $videos = Video::select('title','thumbnail','source','category_id','priority','created_at')->where('status', 'active')->where('category_id',$catId)->get();
+                $videos = Video::select('title','thumbnail','source','category_id','priority','created_at')->where('status', 'activated')->where('category_id',$catId)->get();
                 return response()->json([$videos]);
             }
 

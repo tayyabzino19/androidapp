@@ -50,7 +50,7 @@
                             <input type="hidden" name="status" value="0">
                             <span class="switch switch-icon">
                                 <span class="font-weight-bold">Status &nbsp; &nbsp;</span> <label class="ml-2">
-                                    <input type="checkbox" @if ($video->status == 'active') checked="checked" @endif name="status"
+                                    <input type="checkbox" @if ($video->status == 'activated') checked="checked" @endif name="status"
                                         value="1">
                                     <span></span>
                                 </label>

@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         $user->name = "Ahmad Ayaz";
         $user->email = "ahmad@gmail.com";
         $user->password = Hash::make('pakistan');
-        $user->status = "active";
+        $user->status = "activated";
         $user->photo = "";
         $user->key = "RJoJnyCXm8rP4BtM85hY";
 
