@@ -272,7 +272,10 @@
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes, delete it!",
+            customClass:{
+                confirmButton: "btn-primary"
+            }
         }).then(function(result) {
             if (result.value) {
 

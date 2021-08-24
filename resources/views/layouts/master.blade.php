@@ -43,7 +43,90 @@
 
 
 
+    <style>
+            .brand .brand-logo{
+                color:#ffffff!important;
+            }
+            .btn-primary{
 
+              background-color:#BB2349!important;
+              border-color:#BB2349!important;
+            }
+            .paginate_button >.page-item >.active >a{
+                background-color:#BB2349!important;
+            }
+            .btn.btn-light-primary{
+                color:#ffffff;
+                background:#BCA0A4;
+
+            }
+            .btn.btn-light-primary:hover{
+
+                background:#BB2349!important;
+
+            }
+
+            .switch input:checked~span:after{
+                background-color:#BB2349!important;
+            }
+
+            .dataTables_wrapper
+            .dataTables_paginate
+            .paginate_button.current,
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+
+            color: #333 !important;
+            border: 1px solid #BB2349;
+            background-color: #BB2349;
+            color:#ffffff!important;
+
+
+            }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button{
+            box-sizing: border-box;
+            display: inline-block;
+            min-width: 1.5em;
+            padding: .3em .7em;
+            margin-left: 2px;
+            text-align: center;
+            text-decoration: none !important;
+            cursor: pointer;
+            *cursor: hand;
+            color: #333 !important;
+            border: 1px solid transparent;
+            border-radius: 2px;
+            }
+            #allprojects_filter input{
+                border:1px solid #eeeeee;
+                border-radius: 3px;
+                padding: .5em .7em;
+            }
+
+            .dataTables_wrapper .dataTables_paginate .pagination .page-item.active>.page-link{
+                background-color: #BB2349;
+            }
+            .dataTables_wrapper .dataTables_paginate .pagination .page-item:hover:not(.disabled)>.page-link{
+                background:#BB2349;
+
+            }
+
+            .navi.navi-hover .navi-item .navi-link:hover{
+                background:#BCA0A4;
+
+            }
+            .navi .navi-item .navi-link:hover .navi-text{
+                color: #ffffff !important;
+
+            }
+            .symbol{
+                color: #ffffff !important;
+            }
+
+
+
+
+    </style>
     @section("page_head")
     @show
     <title> @yield('title') | Glitter Live Wallpaper </title>
@@ -98,8 +181,10 @@
                 <!--begin::Brand-->
                 <div class="brand flex-column-auto" id="kt_brand">
                     <!--begin::Logo-->
-                    <a href="" class="brand-logo">
+                    <a href="" class="brand-logo text-center">
                         <img width="50" alt="Logo" src="{{ asset('design/assets/media/banners/Logochhwhite.png') }}" />
+                        <br/>
+                        Glitter APP
                     </a>
                     <!--end::Logo-->
                     <!--begin::Toggle-->
@@ -229,7 +314,7 @@
                         <!--end::Copyright-->
                         <!--begin::Nav-->
                         <div class="nav nav-dark">
-                            &copy; All rights reserved by&nbsp;<a class="text-dark-75 text-hover-primary" href="">Zinormous</a>
+                            &copy; All rights reserved by&nbsp;<a class="text-dark-75 text-hover-primary" href="">Glitter APP</a>
                         </div>
                         <!--end::Nav-->
                     </div>
@@ -296,6 +381,7 @@
     </script>
 
         @section("page_js")
+
         @show
 
 </body>

@@ -15,8 +15,7 @@
     <link href="{{ asset('design/assets/plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet"
         type="text/css" />
 
-        <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet"
-        type="text/css" />
+
 
 
 @endsection
@@ -103,7 +102,7 @@
 
 
 
-                        <table class="table table-bordered table-hover table-checkable  "
+                        <table class=" table table-bordered table-hover table-checkable"
                             style="margin-top: 13px !important" id="allprojects">
                             <thead>
                                 <tr>
@@ -326,7 +325,10 @@
                 text: "You won't be able to revert this!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "Yes, delete it!",
+                customClass:{
+                confirmButton: "btn-primary"
+            }
             }).then(function(result) {
                 if (result.value) {
 

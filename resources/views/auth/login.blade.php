@@ -37,6 +37,9 @@
                 background-color:#BB2349!important;
                 border-color: #BB2349!important;
             }
+            .mylabels{
+                color:#BB2349!important;
+            }
         </style>
 	</head>
 	<!--end::Head-->
@@ -102,7 +105,7 @@
                                         <img src="{{ asset('design/assets/media/banners/logo.png')}}" class="max-h-250px" alt="">
                                     </a>
                                     <br/>
-									<h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg mt-5">Welcome to Glitter app</h3>
+									<h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg mt-5">Welcome to Glitter App</h3>
 
 								</div>
 								<!--begin::Title-->
@@ -110,7 +113,7 @@
 
 
                                 <div class="form-group">
-									<label class="font-size-h6 font-weight-bolder text-dark">Email</label>
+									<label class="font-size-h6 font-weight-bolder text-dark mylabels">Email</label>
 									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg  @error('email') is-invalid @enderror"
                                     type="email" name="email" autocomplete="off"  placeholder="Enter Your Email"
                                     required
@@ -125,11 +128,11 @@
 								<!--begin::Form group-->
 								<div class="form-group">
 									<div class="d-flex justify-content-between mt-n5">
-										<label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
+										<label class="font-size-h6 font-weight-bolder text-dark pt-5 mylabels">Password</label>
 
 									</div>
 									<input
-                                    class="form-control form-control-solid h-auto py-6 px-6 rounded-lg @error('password') is-invalid @enderror"
+                                    class=" form-control form-control-solid h-auto py-6 px-6 rounded-lg @error('password') is-invalid @enderror"
                                     type="password" name="password"
                                     required
                                     placeholder="Enter Your Password"
