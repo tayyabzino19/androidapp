@@ -73,6 +73,7 @@
                                 <th>Sorting </th>
                                 <th>Name</th>
                                 <th>Items</th>
+                                <th>Icon</th>
                                 <th>Status</th>
 
                                 <th>Actions</th>
@@ -87,7 +88,15 @@
                                     <td> {{ $category->priority }} </td>
                                     <td> {{ $category->name }} </td>
                                     <td> {{ $category->videos->count() }} </td>
+                                    <td>
+                                        @if($category->icon == '')
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png" style="width:70px;height:70px" class="img-thumbnail playvideo" >
+                                        @else
+                                        <img src="{{asset('storage/data/'.$category->icon )}}" style="width:70px;height:70px" class="img-thumbnail playvideo" >
 
+
+                                        @endif
+                                       </td>
                                     <td>
                                         @if ($category->status == 'active')
                                             <span
@@ -101,7 +110,8 @@
                                         <span class="label-inline   font-weight-bold editcategory" data-toggle="modal"
                                             data-target="#editCategory" data-id="{{ $category->id }}"
                                             data-name="{{ $category->name }}" data-status="{{ $category->status }}"
-                                            data-priority="{{ $category->priority }}">
+                                            data-priority="{{ $category->priority }}"
+                                            data-catimg="{{ $category->icon }}">
                                             <a href="#">
                                                 <i class="text-warning flaticon-eye"></i>
                                             </a>
@@ -142,7 +152,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
-                <form method="post" action="{{ route('category.store') }}">
+                <form method="post" action="{{ route('category.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
 
@@ -165,7 +175,7 @@
 
                                 <div class="form-group">
                                     <label>Name </label>
-                                    <input type="text" class="form-control form-control-solid" name="name"
+                                    <input type="text" class="form-control form-control-solid" name="name" required
                                         placeholder="Enter Category Title">
                                 </div>
 
@@ -175,7 +185,25 @@
                                         placeholder="Enter Prioty Number" value="{{ $getLastSortid->priority+1 }}">
                                 </div>
 
-
+                            <div class="image-input image-input-outline" id="userimage"
+                             style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png)"
+                            >
+                            <div class="image-input-wrapper" style="background-image: none;"></div>
+                            <label
+                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="change" data-toggle="tooltip" title=""
+                            data-original-title="Upload Photo">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="photo" accept=".png, .jpg, .jpeg" required>
+                            <input type="hidden" name="profile_avatar_remove" value="0">
+                            </label>
+                            <span
+                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="cancel" data-toggle="tooltip" title=""
+                            data-original-title="Upload Photo">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                            </span>
+                            </div>
 
                             </div>
                         </div>
@@ -197,7 +225,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
-                <form method="post" action="{{ route('category.update') }}">
+                <form method="post" action="{{ route('category.update') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="card card-custom">
@@ -225,12 +253,34 @@
                                     <input type="text" class="form-control form-control-solid" name="name" id="name">
                                 </div>
 
+
+
+
                                 <div class="form-group">
                                     <label>Priority Order</label>
                                     <input type="number" class="form-control form-control-solid" name="priority"
                                         id="priority">
                                 </div>
 
+
+                                  <div class="image-input image-input-outline" id="userimageupdate"
+                                    style="background-image: url()">
+                            <div class="image-input-wrapper" style="background-image: none;"></div>
+                            <label
+                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="change" data-toggle="tooltip" title=""
+                            data-original-title="Upload Photo">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="update_photo" accept=".png, .jpg, .jpeg" >
+                            <input type="hidden" name="profile_avatar_remove" value="0">
+                            </label>
+                            <span
+                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="cancel" data-toggle="tooltip" title=""
+                            data-original-title="Upload Photo">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                            </span>
+                            </div>
 
 
                             </div>
@@ -295,11 +345,18 @@
         var name = $(this).data('name');
         var status = $(this).data('status');
         var priority = $(this).data('priority');
+        var catIcon = $(this).data('catimg');
+        var url = 'storage/data/'+catIcon;
 
 
         $('#editid').val(id);
         $('#name').val(name);
         $('#priority').val(priority);
+
+
+
+        $("#userimageupdate").css("background-image", "url(" + url + ")");
+
         if (status == 'active') {
             $('#status').prop('checked', true);
         } else {
@@ -315,6 +372,11 @@
 </script>
 
 
+<script>
+    var avatar5 = new KTImageInput('userimage');
+    var avatar6 = new KTImageInput('userimageupdate');
+
+</script>
 
 
 

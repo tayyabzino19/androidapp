@@ -24,8 +24,9 @@ class CategoriesController extends Controller
             'name' => 'required|unique:categories,name|max:250',
             'status' => 'required',
             'prioty' => 'required|numeric|min:1',
-
+            'photo' => 'required|image|mimes:jpg,png',
         ]);
+
 
         $category = new Category;
         $getprioty = Category::select('priority')->first();
@@ -51,6 +52,24 @@ class CategoriesController extends Controller
         $category->status = $status;
 
         if ($category->save()) {
+
+            if ($request->hasFile('photo')){
+                $filenameWithExt = $request->file('photo')->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('photo')->getClientOriginalExtension();
+                $fileNameToStore = 'cat_' . $category->id . '.' . $extension;
+                $upload_status = $request->file('photo')->storeAs("public/data/", $fileNameToStore);
+
+            }else{
+
+                $fileNameToStore = 'dummy.png';
+
+
+            }
+            $cat =  Category::find($category->id);
+            $cat->icon = $fileNameToStore;
+            $cat->save();
+
             return redirect()->back()->with('success', 'New Category Added');
         } else {
             return redirect()->back()->with('error', 'Error While Adding Category');
@@ -91,6 +110,8 @@ class CategoriesController extends Controller
             'status' => 'required',
             'priority' => 'required',
             'id'=>'required',
+            'update_photo' => 'image|mimes:jpg,png',
+
 
         ]);
         $category =  Category::findOrFail($request->id);
@@ -106,6 +127,27 @@ class CategoriesController extends Controller
 
 
         if ($category->save()) {
+
+
+
+            if ($request->hasFile('update_photo')){
+                $filenameWithExt = $request->file('update_photo')->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('update_photo')->getClientOriginalExtension();
+                $fileNameToStore = 'cat_' . $category->id . '.' . $extension;
+                $upload_status = $request->file('update_photo')->storeAs("public/data/", $fileNameToStore);
+
+            }else{
+
+                $fileNameToStore = $category->icon;
+
+
+            }
+            $update_cat =  Category::find($category->id);
+            $update_cat->icon = $fileNameToStore;
+
+            $update_cat->save();
+
             return redirect()->back()->with('success', 'Category Updated');
         } else {
             return redirect()->back()->with('error', 'Error While Updating Category');
