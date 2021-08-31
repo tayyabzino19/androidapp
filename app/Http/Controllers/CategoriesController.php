@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 class CategoriesController extends Controller
 {
     public function index()
@@ -86,6 +87,10 @@ class CategoriesController extends Controller
 
         $find =  Category::findOrFail($request->id);
         if ($find->delete()) {
+
+
+
+
             return redirect()->back()->with('success', ' Category Deleted');
         } else {
             return redirect()->back()->with('error', 'Error While Adding Category');
@@ -128,9 +133,13 @@ class CategoriesController extends Controller
 
         if ($category->save()) {
 
-
+            $update_cat =  Category::find($category->id);
 
             if ($request->hasFile('update_photo')){
+
+                File::delete(public_path() . '/storage/data/' . $update_cat->icon);
+
+
                 $filenameWithExt = $request->file('update_photo')->getClientOriginalName();
                 $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
                 $extension = $request->file('update_photo')->getClientOriginalExtension();
@@ -143,7 +152,7 @@ class CategoriesController extends Controller
 
 
             }
-            $update_cat =  Category::find($category->id);
+
             $update_cat->icon = $fileNameToStore;
 
             $update_cat->save();
