@@ -14,9 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
-Route::get('get/{key}/videos/{category}', [App\Http\Controllers\VideoController::class, 'apivideos']);
-Route::get('get/{key}/categories', [App\Http\Controllers\CategoriesController::class, 'categories']);
+
+
+
+
+Route::group(['middleware' => ['auth:sanctum']], function (){
+
+    Route::get('get/videos/{category}', [App\Http\Controllers\VideoController::class, 'apivideos']);
+    Route::get('get/categories', [App\Http\Controllers\CategoriesController::class, 'categories']);
+
+});

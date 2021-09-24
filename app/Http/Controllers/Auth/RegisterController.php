@@ -64,10 +64,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+
+         $user =  User::create([
             'name' => $data['name'],
+            'status' => 'active',
             'email' => $data['email'],
+            'photo'=>'',
             'password' => Hash::make($data['password']),
         ]);
+        $token  =  $user->createToken('AuthToken');
+        if($token){
+            $user_update = User::find($user->id);
+            $user_update->key = $token->plainTextToken;
+            $user_update->save();
+        }
+        return $user;
     }
 }

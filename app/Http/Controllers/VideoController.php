@@ -15,26 +15,25 @@ class VideoController extends Controller
 
 
 
-    public function allvideos(Request $request){
+    public function allvideos(Request $request)
+    {
 
         $videos = Video::orderBy('priority', 'asc')->get();
-        if($request->ajax()){
+        if ($request->ajax()) {
 
             $videos = Video::with('category')->get();
             return json_encode($videos);
-
         }
-
     }
 
-    public function allvideos2(){
+    public function allvideos2()
+    {
 
 
         $videos = Video::with('category')->orderBy('priority', 'asc')->get();
         //return json($videos);
 
         return response()->json(['data' => $videos]);
-
     }
 
 
@@ -56,9 +55,9 @@ class VideoController extends Controller
     }
     public function index()
     {
-        $categories  = Category::where('status','active')->get();
+        $categories  = Category::where('status', 'active')->get();
         $videos = Video::with('category')->orderBy('priority', 'asc')->get();
-        return view('videos.index', compact('videos','categories'));
+        return view('videos.index', compact('videos', 'categories'));
     }
 
     public function edit($id)
@@ -87,7 +86,6 @@ class VideoController extends Controller
         if (File::exists($path)) {
             File::delete($path);
             File::delete($thumbnail);
-
         } else {
             $find->delete();
             return redirect()->back()->with('error', "Deleted But File Not Exists");
@@ -122,7 +120,7 @@ class VideoController extends Controller
         }
 
 
-          if ($request->hasFile('video')){
+        if ($request->hasFile('video')) {
             $lastVideo = Video::orderBy('number', 'desc')->first();
             $prefix =  'vd-';
             if ($lastVideo == null) {
@@ -137,33 +135,28 @@ class VideoController extends Controller
             $fileNameToStore = $prefix . ($newName) . '.' . $extension;
             $upload_status = $request->file('video')->storeAs("public/data/", $fileNameToStore);
             if ($upload_status) {
-                $thumbnail  = 'thumb-'.$newName .".jpg";
+                $thumbnail  = 'thumb-' . $newName . ".jpg";
                 $thumbnail_status = Thumbnail::getThumbnail(public_path('storage/data/' . $fileNameToStore), public_path('storage/data/'), $thumbnail, 8);
             }
-
-
-          }else{
+        } else {
 
             $fileNameToStore = 'Dummy.mp3';
             $thumbnail = 'no_img.png';
             $prefix = 0;
             $newName = 0;
+        }
 
+        $video = new Video;
+        $video->title  = $request->title;
+        $video->status = $status;
+        $video->priority = $request->priority;
+        $video->category_id =  $request->category;
+        $video->source =  $fileNameToStore;
+        $video->thumbnail = $thumbnail;
+        $video->video_prefix = $prefix;
+        $video->number = $newName;
 
-
-          }
-
-          $video = new Video;
-          $video->title  = $request->title;
-          $video->status = $status;
-          $video->priority = $request->priority;
-          $video->category_id =  $request->category;
-          $video->source =  $fileNameToStore;
-          $video->thumbnail = $thumbnail;
-          $video->video_prefix = $prefix;
-          $video->number = $newName;
-
-          if ($video->save()) {
+        if ($video->save()) {
 
             return redirect()->route('videos.index')->with('success', 'New Video Added');
         } else {
@@ -200,8 +193,8 @@ class VideoController extends Controller
 
             $prefix =  'vd-';
             //$lastVideo = Video::select('number')->orderBy('id', 'asc')->first();
-            $lastVideo = Video::orderBy('number','desc')->first();
-            $newName =  $lastVideo->number+1;
+            $lastVideo = Video::orderBy('number', 'desc')->first();
+            $newName =  $lastVideo->number + 1;
             $filenameWithExt = $request->file('video')->getClientOriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just Extension
@@ -209,16 +202,14 @@ class VideoController extends Controller
             $fileNameToStore = $prefix . ($newName) . '.' . $extension;
             $upload_status = $request->file('video')->storeAs("public/data", $fileNameToStore);
             if ($upload_status) {
-                $thumbnail  = 'thumb-'.$newName .".jpg";
+                $thumbnail  = 'thumb-' . $newName . ".jpg";
                 $thumbnail_status = Thumbnail::getThumbnail(public_path('storage/data/' . $fileNameToStore), public_path('storage/data/'), $thumbnail, 8);
             }
 
             $find->number = $newName;
-
         } else {
             $fileNameToStore = $find->source;
             $thumbnail = $find->thumbnail;
-
         }
 
 
@@ -244,27 +235,28 @@ class VideoController extends Controller
         }
     }
 
-    public function apivideos($key,$catId)
+    public function apivideos($catId)
     {
 
-        $category = Category::findOrFail($catId);
-        if($category){
-            $user = User::where('key',$key)->first();
-            if ($user == null) {
-                return 'Invalid Access';
-            } else {
-                $videos = Video::select('title','thumbnail','source','category_id','priority','created_at')->where('status', 'activated')->where('category_id',$catId)->get();
-                return response()->json([$videos]);
-            }
-
+        $category = Category::where('id', $catId)->first();
+        if ($category == null) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No record found'
+            ]);
         }
+        $videos = Video::select('title', 'thumbnail', 'source', 'category_id', 'priority', 'created_at')->where('status', 'activated')->where('category_id', $catId)->get();
+        if ($videos == null) {
 
-
-
-
+            return response()->json([
+                'status' => true,
+                'message' => 'Videos not found'
+            ]);
+        } else {
+            return response()->json([
+                'status' => true,
+                'data' => $videos
+            ]);
+        }
     }
 }
-
-
-
-

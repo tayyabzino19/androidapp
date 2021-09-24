@@ -164,20 +164,22 @@ class CategoriesController extends Controller
     }
 
 
-    public function categories($key)
+    public function categories()
     {
 
-         $user = User::where('key',$key)->first();
-         if($user == null){
-             return 'Invalid Access';
-         }else{
             $categories = Category::Select('name','priority','created_at','id','icon')->where('status','active')->get();
 
+            if($categories == null){
+                 return response()->json(['status'=>true,
+                'message'=>'Categories not found']);
+            }
 
-            return response()->json([$categories]);
+            return response()->json(['status'=>false,
+            'data'=>$categories]);
 
 
-         }
+
+
     }
 
 
