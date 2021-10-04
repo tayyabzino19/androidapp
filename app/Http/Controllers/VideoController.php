@@ -136,7 +136,7 @@ class VideoController extends Controller
             $upload_status = $request->file('video')->storeAs("public/data/", $fileNameToStore);
             if ($upload_status) {
                 $thumbnail  = 'thumb-' . $newName . ".jpg";
-                $thumbnail_status = Thumbnail::getThumbnail(public_path('storage/data/' . $fileNameToStore), public_path('storage/data/'), $thumbnail, 8);
+                $thumbnail_status = Thumbnail::getThumbnail(public_path('storage/data/' . $fileNameToStore), public_path('storage/data/'), $thumbnail, 1);
             }
         } else {
 
