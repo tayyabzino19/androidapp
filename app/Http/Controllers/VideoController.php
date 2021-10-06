@@ -45,12 +45,15 @@ class VideoController extends Controller
         $getLastSortid = Video::select('priority')->orderby('priority', 'desc')->first();
         $categories = Category::where('status', 'active')->get();
 
-        if ($getLastSortid) {
 
-            $priority = $getLastSortid->priority;
-        } else {
-            $priority =  0;
-        }
+
+
+           $lastId = Video::orderBy('priority', 'desc')->value('priority'); // gets only the id
+            if($lastId){
+                $priority = $lastId;
+            }else{
+                $priority = 0;
+            }
         return view('videos.create', compact('categories', 'priority'));
     }
     public function index()

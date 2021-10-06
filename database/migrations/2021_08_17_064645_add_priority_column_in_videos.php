@@ -14,7 +14,7 @@ class AddPriorityColumnInVideos extends Migration
     public function up()
     {
         Schema::table('videos', function (Blueprint $table) {
-            $table->string('priority');
+            $table->integer('priority');
         });
     }
 

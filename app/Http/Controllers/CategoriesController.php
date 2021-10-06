@@ -12,7 +12,9 @@ class CategoriesController extends Controller
     {
         $categories = Category::orderby('priority', 'asc')->get();
 
-        $getLastSortid = Category::select('priority')->orderby('priority','desc')->first();
+         $getLastSortid = Category::select('priority')->orderby('priority','desc')->first();
+
+
 
 
         return view('categories.index', compact('categories','getLastSortid'));
