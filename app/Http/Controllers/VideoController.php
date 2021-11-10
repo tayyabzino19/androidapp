@@ -45,12 +45,17 @@ class VideoController extends Controller
         $getLastSortid = Video::select('priority')->orderby('priority', 'desc')->first();
         $categories = Category::where('status', 'active')->get();
 
-        if ($getLastSortid) {
+       
 
-            $priority = $getLastSortid->priority;
-        } else {
-            $priority =  0;
-        }
+        $lastId = Video::max('priority');
+           
+            if($lastId){
+                $priority = $lastId;
+            }else{
+                $priority = 0;
+            }
+
+
         return view('videos.create', compact('categories', 'priority'));
     }
     public function index()
@@ -136,7 +141,7 @@ class VideoController extends Controller
             $upload_status = $request->file('video')->storeAs("public/data/", $fileNameToStore);
             if ($upload_status) {
                 $thumbnail  = 'thumb-' . $newName . ".jpg";
-                $thumbnail_status = Thumbnail::getThumbnail(public_path('storage/data/' . $fileNameToStore), public_path('storage/data/'), $thumbnail, 8);
+                $thumbnail_status = Thumbnail::getThumbnail(public_path('storage/data/' . $fileNameToStore), public_path('storage/data/'), $thumbnail, 1);
             }
         } else {
 
@@ -203,7 +208,7 @@ class VideoController extends Controller
             $upload_status = $request->file('video')->storeAs("public/data", $fileNameToStore);
             if ($upload_status) {
                 $thumbnail  = 'thumb-' . $newName . ".jpg";
-                $thumbnail_status = Thumbnail::getThumbnail(public_path('storage/data/' . $fileNameToStore), public_path('storage/data/'), $thumbnail, 8);
+                $thumbnail_status = Thumbnail::getThumbnail(public_path('storage/data/' . $fileNameToStore), public_path('storage/data/'), $thumbnail, 1);
             }
 
             $find->number = $newName;

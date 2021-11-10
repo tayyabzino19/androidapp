@@ -179,10 +179,15 @@
                                         placeholder="Enter Category Title">
                                 </div>
 
-                                <div class="form-group">
+                                  <div class="form-group">
                                     <label>Prioty Order</label>
-                                    <input type="number" class="form-control form-control-solid" name="prioty"
-                                        placeholder="Enter Prioty Number" value="{{ $getLastSortid->priority+1 }}">
+                                       <input type="number" class="form-control form-control-solid" name="prioty"
+                                        placeholder="Enter Prioty Number"
+                                        @if($getLastSortid == null)
+                                        value="1"
+                                        @else
+                                        value="{{ $getLastSortid->priority+1 }}"
+                                        @endif>
                                 </div>
 
                             <div class="image-input image-input-outline" id="userimage"

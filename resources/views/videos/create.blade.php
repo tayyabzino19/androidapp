@@ -64,7 +64,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                         </div>
-
+                             
                         <div class="form-group">
                             <label>Select Category </label>
                             <select class="form-control form-control-solid" required name="category">
@@ -101,6 +101,7 @@
                                 value="{{ $priority+1 }}"
                                 placeholder="Enter Video Title" required="">
 
+			 <input type="hidden" value="{{ $priority }}"/>			                 
                                 @error('priority')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
