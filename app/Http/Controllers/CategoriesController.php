@@ -185,5 +185,24 @@ class CategoriesController extends Controller
     }
 
 
+    public function categoriesWithVideos()
+    {
+
+            $categories = Category::Select('name','priority','created_at','id','icon')->with('videos')->where('status','active')->get();
+
+            if($categories == null){
+                 return response()->json(['status'=>true,
+                'message'=>'Categories not found']);
+            }
+
+            return response()->json(['status'=>false,
+            'data'=>$categories]);
+
+
+
+
+    }
+
+
 
 }
